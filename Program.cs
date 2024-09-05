@@ -127,6 +127,11 @@
             if ("1" == answer)
             {
                 Console.WriteLine("All documents are delete");
+               
+                 
+                      Documents[99] = null;
+                      
+                              
             }
             else
             {
@@ -186,13 +191,26 @@
             // иначе,если мы редактируем подпись
             else if (fieldToEdit == 2)
             {
-                Console.WriteLine("Current sign  is: " + Documents[docNumber].Sign);
-                Console.WriteLine("Enter a new sign ");
-                var newSign = Console.ReadLine();
-                Documents[docNumber].Sign = newSign;
-                Console.WriteLine();
-                Console.WriteLine("OK");
-                Console.ReadLine();
+                while (true)
+                {
+                    Console.WriteLine("Current sign  is: " + Documents[docNumber].Sign);
+                    Console.WriteLine("Enter a new sign ");
+                    var newSign = Console.ReadLine();
+                    Documents[docNumber].Sign = newSign;
+                    Console.WriteLine("Вы ввели правильную подпись?Да или нет");
+                    answer = Console.ReadLine();
+                    if (answer == "Да")
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine("OK");
+                        Console.ReadLine();
+                        break;
+                    }
+                    else if (answer == "нет")
+                    {
+                        continue;
+                    }                                                       
+                }
             }
 
             else if (fieldToEdit == 3) 
