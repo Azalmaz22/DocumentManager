@@ -20,8 +20,11 @@
      internal class Program
      {
         static Document[] Documents = new Document[100];
+   
         static void Main()
         {
+            Console.WriteLine("See the size of the array");
+           
             Documents[0] = new Document() { Number = 1, Name = "project document" };
             Documents[1] = new Document() { Number = 2, Name = "house document" };
             Documents[2] = new Document() { Number = 3, Name = "tech document" };
@@ -61,7 +64,7 @@
                 }
                 else if (currentMainAction == Actions.Read)
                 {
-                    PrintDocuments();
+                    ReadDocuments();
 
                 }
                 else if (currentMainAction == Actions.Update)
@@ -127,9 +130,12 @@
             if ("1" == answer)
             {
                 Console.WriteLine("All documents are delete");
-               
+               for (int i = 0; i < Documents.Length; i++) 
+                {
+                    Documents[i] = null;
+                }
                  
-                      Documents[99] = null;
+                     // Documents = new Document[100];
                       
                               
             }
@@ -147,7 +153,7 @@
                 Console.WriteLine();
                 //пользователь вводит номер документа. Происходит чтение:
                 answer = Console.ReadLine();
-                var docNumber = int.Parse(answer);
+                var docNumber = int.Parse(answer)-1;
                 //Удаляем документ
                 Documents[docNumber] = null;
             }
@@ -172,7 +178,10 @@
             Console.Clear();
             Console.WriteLine("What do you want to change?");
             Console.WriteLine("1 - Name");
-            Console.WriteLine("2 - Sign");
+            if (Documents[docNumber].Sign == null)
+            {
+                Console.WriteLine("2 - Sign");
+            }  
             Console.WriteLine("3 - Surname");
             Console.WriteLine();
             answer = Console.ReadLine();
@@ -180,13 +189,26 @@
             //ecли мы редактируем имя
             if (fieldToEdit == 1)
             {
-                Console.WriteLine("Current name is: " + Documents[docNumber].Name);
-                Console.WriteLine("Enter a new name");
-                var newName = Console.ReadLine();
-                Documents[docNumber].Name = newName;
-                Console.WriteLine();
-                Console.WriteLine("OK");
-                Console.ReadLine();
+                while (true)
+                {
+                    Console.WriteLine("Current name is: " + Documents[docNumber].Name);
+                    Console.WriteLine("Enter a new name");
+                    var newName = Console.ReadLine();
+                    Documents[docNumber].Name = newName;
+                    Console.WriteLine();
+                    Console.WriteLine("OK");
+                    Console.ReadLine();
+                    Console.WriteLine("Anew?");
+                    answer = Console.ReadLine();
+                    if (answer == "yes")
+                    {
+                        continue;
+                    }
+                    if (answer == "no")                                       
+                    {
+                        break;
+                    } 
+                }
             }
             // иначе,если мы редактируем подпись
             else if (fieldToEdit == 2)
@@ -197,6 +219,7 @@
                     Console.WriteLine("Enter a new sign ");
                     var newSign = Console.ReadLine();
                     Documents[docNumber].Sign = newSign;
+                    Documents[docNumber].SignDate = DateTime.Now;
                     Console.WriteLine("Вы ввели правильную подпись?Да или нет");
                     answer = Console.ReadLine();
                     if (answer == "Да")
@@ -225,13 +248,14 @@
             }
         }
 
-        private static void PrintDocuments()
+        private static void ReadDocuments()
         {
             for (int i = 0; i < Documents.Length; i++)
             {
                 if (Documents[i] != null)
                 {
                     Console.WriteLine(Documents[i].Name);
+                    Console.ReadLine();
                 }
             }
         }
