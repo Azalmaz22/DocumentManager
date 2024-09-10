@@ -1,30 +1,18 @@
-﻿namespace Journal_2
-{
+﻿using System.Reflection.Metadata;
 
-     public class Document 
-     {
-        public string Name;
-        public string Sign;
-        public string Surname;
-        public DateTime? SignDate;
-        public int Number;
-     }
-     enum Actions 
-     {
-        Create = 1,
-        Read = 2,
-        Update = 3, 
-        Delete = 4,
-        Exit = 5,
-     }
+namespace Journal_2
+{   
+   
      internal class Program
      {
-        static Document[] Documents = new Document[100];
+        
    
         static void Main()
         {
             Console.WriteLine("See the size of the array");
-           
+            var answer = Console.ReadLine;
+            var size_array = int.Parse(answer);
+            Document[] Documents = new Document[size_array];
             Documents[0] = new Document() { Number = 1, Name = "project document" };
             Documents[1] = new Document() { Number = 2, Name = "house document" };
             Documents[2] = new Document() { Number = 3, Name = "tech document" };
@@ -59,22 +47,22 @@
                 var currentMainAction = (Actions)currentMainActionValue;
                 if (currentMainAction == Actions.Create)
                 {
-                    CreateNewDocument();
+                    CreateNewDocument(Documents);
 
                 }
                 else if (currentMainAction == Actions.Read)
                 {
-                    ReadDocuments();
+                    ReadDocuments(Documents);
 
                 }
                 else if (currentMainAction == Actions.Update)
                 {
-                    UpdateDocuments();
+                    UpdateDocuments(Documents);
 
                 }
                 else if (currentMainAction == Actions.Delete)
                 {
-                    DeleteDocuments();
+                    DeleteDocuments(Documents);
 
                 }
                 else if (currentMainAction == Actions.Exit)
@@ -121,7 +109,7 @@
             return true;
         }
 
-        private static void DeleteDocuments()
+        private static void DeleteDocuments(Document[]Documents)
         {
             Console.WriteLine($"Would you like delete all documents ?");
             Console.WriteLine("1 - yes");
@@ -159,7 +147,7 @@
             }
         }
 
-        private static void UpdateDocuments()
+        private static void UpdateDocuments(Document[]Documents)
         {
             Console.Clear();
             Console.WriteLine("Choose document number for edit\n");
@@ -181,8 +169,11 @@
             if (Documents[docNumber].Sign == null)
             {
                 Console.WriteLine("2 - Sign");
-            }  
-            Console.WriteLine("3 - Surname");
+            }
+            if (Documents[docNumber].Surname == null)
+            {
+                Console.WriteLine("3 - Surname");
+            }
             Console.WriteLine();
             answer = Console.ReadLine();
             var fieldToEdit = int.Parse(answer);
@@ -211,7 +202,7 @@
                 }
             }
             // иначе,если мы редактируем подпись
-            else if (fieldToEdit == 2)
+            else if (fieldToEdit == 2 & Documents[docNumber].Sign == null)
             {
                 while (true)
                 {
@@ -236,7 +227,7 @@
                 }
             }
 
-            else if (fieldToEdit == 3) 
+            else if (fieldToEdit == 3 & Documents[docNumber].Surname == null) 
             {
                 Console.WriteLine("Current surname is: " + Documents[docNumber].Surname);
                 Console.WriteLine("Enter a new  surname");
@@ -248,7 +239,7 @@
             }
         }
 
-        private static void ReadDocuments()
+        private static void ReadDocuments(Document[]Documents)
         {
             for (int i = 0; i < Documents.Length; i++)
             {
@@ -260,7 +251,7 @@
             }
         }
 
-        private static void CreateNewDocument()
+        private static void CreateNewDocument(Document[]Documents)
         {
             Console.WriteLine("\nEnter the new document name:");
             var newDocumentName = Console.ReadLine();
