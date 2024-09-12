@@ -1,16 +1,22 @@
 ﻿using System.Reflection.Metadata;
 
 namespace Journal_2
-{   
-   
-     internal class Program
+{
+   //public class Document
+    //{
+      //  public string Name;
+      //  public string Sign;
+       // public string Surname;
+      //  public DateTime? SignDate;
+      //  public int Number;
+   // }
+    internal class Program
      {
         
-   
         static void Main()
         {
             Console.WriteLine("See the size of the array");
-            var answer = Console.ReadLine;
+            var answer = Console.ReadLine();
             var size_array = int.Parse(answer);
             Document[] Documents = new Document[size_array];
             Documents[0] = new Document() { Number = 1, Name = "project document" };
